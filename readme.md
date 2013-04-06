@@ -25,4 +25,4 @@ You shouldn't be using high-quality videos... here's an example ffmpeg encoding 
 You're distracting a user enough with a video, don't do them the dishonor of having to watch a video they have no control over buffer
 
 ## Negative Effects
-Rumor has it that Video decreases conversion rates on websites. So if you have a website where you expect the user to do anything, don't use this script. Or if you have an online store. Or if you make money of your website. Just... don't. Videos are cool and all but save yourself the hassle.
+[Rumor has it that Video decreases conversion rates on websites](https://twitter.com/JohnBowmanJr/status/320221377045082112). So if you have a website where you expect the user to do anything, don't use this script. Or if you have an online store. Or if you make money of your website. Just... don't. Videos are cool and all but save yourself the hassle.
