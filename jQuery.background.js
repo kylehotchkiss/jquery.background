@@ -14,8 +14,10 @@
         var $this = $(this);
 
         var settings = $.extend( {
+            'image' : '',        
             'video' : '',
-            'image' : ''
+            'imageID': 'backgroundImage',
+            'videoID': 'backgroundVideo'
         }, options);
 
         //////////////////////
@@ -25,66 +27,73 @@
             /////////////////////////////////////////
             // Get rid of those darned black bars! //
             /////////////////////////////////////////
-
-            // Future: messure container instead of window
+            var $video = $this.find("video");
 
             var windowHeight = $(window).height();
             var windowWidth = $(window).width();
-            var videoHeight = $this.find("video").height();
-            var videoWidth = $this.find("video").width();
+            var windowRatio = windowWidth / windowHeight;
+            
+            var videoHeight = $video.height();   
+            var videoWidth = $video.width();
+            var videoRatio = videoWidth / videoHeight;
 
-            if ( videoHeight < windowHeight ) {
-                $this.find("video").css({
+            if ( windowRatio < videoRatio ) {
+                $video.css({
                    height: "100%",
                    width: "auto"
                 });
             } else {
-                $this.find("video").css({
+                $video.css({
                     height: "auto",
                     width: "100%"
                 });
             }
         };
 
-        /////////////////////////////////////////////////////////////
-        // Make sure that our parent element is hogging the screen //
-        /////////////////////////////////////////////////////////////
-        $("body").css({ 'margin': 0 });
-        $this.css({ 'display': 'block', 'height': '100%', 'left': 0, 'overflow': 'hidden', 'position': 'absolute', 'top': 0, 'width': '100%', 'z-index': -100 });
 
-
-        if ( typeof window.orientation === "undefined"
-            && !!document.createElement('video').canPlayType('video/webm; codecs="vp8, vorbis"') ) {
-            //////////////////////////////////////////////////////////
-            // If we're not mobile and support video, use the Video //
-            //////////////////////////////////////////////////////////
-            $this.html("<video autoplay=\"true\" loop=\"true\"><source src=\"" + settings.video + "\" type=\"video/webm\" /></video>")
-
-            fullscreen();
-
-            ////////////////////////////////////////////
-            // Pause and Play for Window focus events //
-            ////////////////////////////////////////////
-            $(window).focus(function() {
-                $this.find("video")[0].play();
-            });
-
-            $(window).blur(function() {
-                $this.find("video")[0].pause();
-            });
-
-
-            /////////////////////////////////////////
-            // Window resize events for Fullscreen //
-            /////////////////////////////////////////
-            $(window).resize(function() {
-                fullscreen();
-            });
-        } else {
-            ////////////////////////////////////////////////////////////
-            // We're Mobile or an older browser, so fallback to Image //
-            ////////////////////////////////////////////////////////////
-            $this.css({ 'background-image': 'url(' + settings.image + ')', 'background-size': 'cover', 'background-position': 'center center' });
-        }
+        if ( $this.length > 0 ) {
+	        /////////////////////////////////////////////////////////////
+	        // Make sure that our parent element is hogging the screen //
+	        /////////////////////////////////////////////////////////////
+	        $("body").css({ 'margin': 0 });
+	        $this.css({ 'display': 'block', 'height': '100%', 'left': 0, 'overflow': 'hidden', 'position': 'absolute', 'top': 0, 'width': '100%', 'z-index': -100 });
+	
+	
+	        if ( typeof window.orientation === "undefined"
+	            && !!document.createElement('video').canPlayType('video/webm; codecs="vp8, vorbis"') ) {
+	            //////////////////////////////////////////////////////////
+	            // If we're not mobile and support video, use the Video //
+	            //////////////////////////////////////////////////////////
+	            $this.html("<video autoplay=\"true\" loop=\"true\" id=\"" + settings.videoID + "\"><source src=\"" + settings.video + "\" type=\"video/webm\" /></video>");
+	            
+	            var $video = $("#" + settings.videoID);
+	            
+	            /////////////////////////////////////
+	            // Events for All of The Scenarios //
+	            /////////////////////////////////////
+	            $video.on("loadedmetadata", function() {
+		        	fullscreen(); 
+	            });
+	            
+	            $(window).focus(function() {
+	                $video[0].play();
+	            });
+	
+	            $(window).blur(function() {
+	                $video[0].pause();
+	            });
+	
+	            $(window).resize(function() {
+	                fullscreen();
+	            });
+	        } else {
+	            ////////////////////////////////////////////////////////////
+	            // We're Mobile or an older browser, so fallback to Image //
+	            ////////////////////////////////////////////////////////////
+	            $this.css({ 'background-image': 'url(' + settings.image + ')', 'background-size': 'cover', 'background-position': 'center center' });
+	        }
+	    } else {
+		    console.warn("jQuery.background(): The element you tried to use for a background doesn't exist.");
+	    }
     };
 })(jQuery);
