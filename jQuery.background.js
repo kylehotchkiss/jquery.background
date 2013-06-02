@@ -14,7 +14,7 @@
         var $this = $(this);
 
         var settings = $.extend( {
-            'image' : '',        
+            'image' : '',
             'video' : '',
             'imageID': 'backgroundImage',
             'videoID': 'backgroundVideo'
@@ -33,7 +33,7 @@
             var windowWidth = $(window).width();
             var windowRatio = windowWidth / windowHeight;
             
-            var videoHeight = $video.height();   
+            var videoHeight = $video.height();
             var videoWidth = $video.width();
             var videoRatio = videoWidth / videoHeight;
 
@@ -60,11 +60,11 @@
 	
 	
 	        if ( typeof window.orientation === "undefined"
-	            && !!document.createElement('video').canPlayType('video/webm; codecs="vp8, vorbis"') ) {
+	            && !!document.createElement('video').canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"') ) {
 	            //////////////////////////////////////////////////////////
 	            // If we're not mobile and support video, use the Video //
 	            //////////////////////////////////////////////////////////
-	            $this.html("<video autoplay=\"true\" loop=\"true\" id=\"" + settings.videoID + "\"><source src=\"" + settings.video + "\" type=\"video/webm\" /></video>");
+	            $this.html("<video autoplay=\"true\" loop=\"true\" id=\"" + settings.videoID + "\"><source src=\"" + settings.video + "\" /></video>");
 	            
 	            var $video = $("#" + settings.videoID);
 	            
@@ -72,7 +72,7 @@
 	            // Events for All of The Scenarios //
 	            /////////////////////////////////////
 	            $video.on("loadedmetadata", function() {
-		        	fullscreen(); 
+		        	fullscreen();
 	            });
 	            
 	            $(window).focus(function() {

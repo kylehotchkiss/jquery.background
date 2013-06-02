@@ -15,14 +15,11 @@ Gracefully degrades to static image in all unsupported instances.
     });
 
 ## Gotchas
-It only supports WebM. It's more or less a political move of mine. I'll add validation in one of these days, maybe.
+It only supports MP4. I thought about WebM a bit, but sorry, WebM is hype for now. It's by no means any more efficient of a format, as I once thought.
 
-You shouldn't be using high-quality videos... here's an example ffmpeg encoding command that will keep a file small:
-
-    ffmpeg -t 00:00:30 -i movie.MOV -an -pass 1 -codec:v libvpx -b:v 650k -codec:a libvorbis -b:a 100k -s 640x360 -f webm -y /dev/null && 
-    ffmpeg -t 00:00:30 -i movie.MOV -an -pass 2 -codec:v libvpx -b:v 650k -codec:a libvorbis -b:a 100k -s 640x360 -y background.webm
+Check out the [Dive into HTML5](http://diveintohtml5.info/video.html#handbrake-gui) tutorial on Video Encoding. I set the quality to 1500kbps which saves a considerable amount of bandwidth. I also disable all the sound channels and dual-pass the video. 
     
-You're distracting a user enough with a video, don't do them the dishonor of having to watch a video they have no control over buffer
+You're distracting a user enough with a video, don't do them the dishonor of having to watch a video they have no control over buffer. 
 
 ## Negative Effects
 [Rumor has it that Video decreases conversion rates on websites](https://twitter.com/JohnBowmanJr/status/320221377045082112). So if you have a website where you expect the user to do anything, don't use this script. Or if you have an online store. Or if you make money of your website. Just... don't. Videos are cool and all but save yourself the hassle.
